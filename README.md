@@ -8,11 +8,16 @@ Save the following code as `Format.yml` in the `.github/workflows/` directory in
 name: Format suggestions
 on:
   pull_request:
+    # this argument is not required if you don't use the `suggestion-label` input
+    types: [ opened, reopened, synchronize, labeled, unlabeled ]
 jobs:
   code-style:
     runs-on: ubuntu-latest
     steps:
       - uses: julia-actions/julia-format@v2
+        with:
+          version: 1 # set this to e.g. 1.0.54 if you need a stable version
+          suggestion-label: 'format-suggest' # leave this empty to show the suggestions for all PRs
 ```
 
 With this workflow, [reviewdog](https://github.com/reviewdog/reviewdog) will automatically post code suggestions to pull requests in your repository, based on the formatting rules defined by [JuliaFormatter.jl](https://github.com/domluna/JuliaFormatter.jl).
