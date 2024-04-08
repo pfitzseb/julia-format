@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: julia-actions/julia-format@v2
         with:
-          version: 1 # set this to e.g. 1.0.54 if you need a stable version
+          version: "1" # Set `version` to "1.0.54" if you need to use JuliaFormatter.jl v1.0.54 (default: "1")
           suggestion-label: 'format-suggest' # leave this empty to show the suggestions for all PRs
 ```
 
