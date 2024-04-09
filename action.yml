@@ -25,15 +25,11 @@ runs:
       run: |
         julia -e '
           using JuliaFormatter
-          format(".")'
+          format(".") ? exit(0) : exit(1)'
       shell: bash
     - name: 'Suggest'
       uses: reviewdog/action-suggester@v1
-      if: ${{ inputs.suggestion-label == '' || contains( github.event.pull_request.labels.*.name, inputs.suggestion-label ) }}
+      if: ${{ failure() && (inputs.suggestion-label == '' || contains( github.event.pull_request.labels.*.name, inputs.suggestion-label )) }}
       with:
         tool_name: JuliaFormatter
         fail_on_error: true
-    - name: 'Report'
-      if: ${{ !(inputs.suggestion-label == '' || contains( github.event.pull_request.labels.*.name, inputs.suggestion-label )) }}
-      run: 'git diff --exit-code > /dev/null'
-      shell: bash
